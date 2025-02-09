@@ -13,14 +13,10 @@ import monai
 from monai.networks.nets import FlexibleUNet
 from src.lm import HipSegmenter
 from src.dm import HipSegDataModule
-# from src.network import (
-#     create_model,
-#     create_unet_model
-# )
+
 from initialize_logging import log_init
 from lightning.pytorch import Trainer
 
-# from lightning.pytorch.loggers import TensorBoardLogger
 from pytorch_lightning.loggers import WandbLogger
 
 from lightning.pytorch.callbacks import (
@@ -97,18 +93,6 @@ def train(config_dict: dict):
     )
     trainer.fit(lm, datamodule=dm)
 
-
-
-# ----------------------------------------------------------------------------------------
-# inference
-# ----------------------------------------------------------------------------------------
-
-
-def infer():
-    """Main inference function for the project."""
-    raise NotImplementedError("Inference not implemented.")
-
-
 # ----------------------------------------------------------------------------------------
 # main
 # ----------------------------------------------------------------------------------------
@@ -130,8 +114,6 @@ def main(args: argparse.Namespace):
 
     if args.mode == "train":
         train(config_dict)
-    elif args.mode == "infer":
-        infer()
     else:
         raise NotImplementedError(f"Mode {args.mode} not implemented.")
 

@@ -48,12 +48,6 @@ def train(config_dict: dict):
     
     log_init(config_dict=config_dict)
 
-    # model = create_model(
-    #     IMG_HEIGHT=config_dict["IMG_HEIGHT"],
-    #     IMG_WIDTH=config_dict["IMG_WIDTH"],
-    #     IN_CHANNELS=1,
-    #     OUT_CHANNELS=len(config_dict["class_names"])
-    # )
     model = monai.networks.nets.FlexibleUNet(
         in_channels=1,
         out_channels=config_dict["MODEL_OUT_LENGTH"],
@@ -85,15 +79,9 @@ def train(config_dict: dict):
     )
     lr_monitor = LearningRateMonitor(logging_interval='step')
 
-    # logger = TensorBoardLogger(
-    #     save_dir=os.path.join(config_dict["EXPERIMENT_DIR"], "runs"),
-    #     name=config_dict["EXPERIMENT_RUN_NAME"]
-    # )
-
     logger = WandbLogger(
     save_dir=os.path.join(config_dict["EXPERIMENT_DIR"], "wandb_runs")
     )
-
     
     trainer = Trainer(
         max_epochs=config_dict["MAX_EPOCHS"],

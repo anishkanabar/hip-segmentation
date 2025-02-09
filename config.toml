@@ -1,0 +1,42 @@
+EXPERIMENT_DIR = "/research/projects/m303645_Anish/Current/hip_segmentation"
+
+MODEL_OUT_LENGTH = 2
+EXPERIMENT_RUN_NAME = "mjsw_experiment_new"
+MODEL_NAME = "Vanilla UNET"
+COMMENTS = """
+Vanilla UNet with same architecture as kneeseg
+"""
+
+DATA_DIR = "/scratch/Datasets/2-HIP_projects/mJSW_Segmentation_2.0"
+
+DEVICE = [0]
+
+SAVE_DATASPLIT = true
+RANDOM_SEED = 913245
+
+VAL_FRAC = 0.10
+TEST_FRAC = 0
+
+IMG_HEIGHT = 1024
+IMG_WIDTH = 1024
+
+BATCH_SIZE = 8
+
+TRAIN_WORKERS = 16
+VAL_WORKERS = 16
+TEST_WORKERS = 16
+
+MAX_EPOCHS = 300
+INITIAL_LR = 6e-4
+
+TRAIN = true
+TEST = false
+TEST_MODEL = false
+
+####################
+# Label Dictionary #
+####################
+
+[class_names]
+"femoral head" = 0
+"sourcil" = 1

@@ -40,50 +40,21 @@ class HipSegDataModule(L.LightningDataModule):
         self.val_transforms = build_val_transforms(seg_labels=seg_labels)
 
     def prepare_data(self):
-
-        #list_subfolders_with_paths = [f.path for f in os.scandir(self.data_dir) if f.is_dir()]
         ds = []
-
-        seg_pattern = '*.seg.nrrd'
+        
+        seg_pattern = '*.dcm_Segmentation.seg.nrrd'
         seg_matches = fnmatch.filter(os.listdir(self.data_dir), seg_pattern)
         
         for seg_match in seg_matches:
             if 'dcm' in seg_match:
                 img_match = seg_match.replace(".dcm_Segmentation.seg.nrrd", ".nrrd")
-            else: 
-                img_match = seg_match.replace("_Segmentation.seg.nrrd", ".nrrd")
+            # else: 
+            #     img_match = seg_match.replace("_Segmentation.seg.nrrd", ".nrrd")
             ds.append({
                 "label": os.path.join(self.data_dir, seg_match),
                 "image": os.path.join(self.data_dir, img_match)
             })
-
-        # for folder in list_subfolders_with_paths:
-        #     if 'MG' in folder:
-        #         seg_pattern = '*SEG*.nrrd'
-        #     elif 'SS' in folder:
-        #         seg_pattern = '*Template*.nrrd'
-        #     else:
-        #         seg_pattern = '*.seg.nrrd'
-        #         #seg_pattern = 'none'
-        #     seg_match = fnmatch.filter(os.listdir(folder), seg_pattern)
             
-        #     if len(seg_match)==0:
-        #         continue
-        #     else:
-        #         seg_match = seg_match[0]
-
-        #     if 'MG' in folder: 
-        #         img_match = seg_match.replace("MG SEG ", "img_")
-        #     elif 'SS' in folder:
-        #         temp_seg_match = seg_match[6:]
-        #         img_match = temp_seg_match.replace("mJSW_Hip_Template", "img_")
-        #     else:
-        #         img_match = seg_match.replace(".dcm_Segmentation.seg.nrrd", ".nrrd") 
-
-        #     ds.append({
-        #         "label": os.path.join(folder, seg_match),
-        #         "image": os.path.join(folder, img_match)
-        #     })
         self.dataset = ds
 
     def setup(self, stage: str):
